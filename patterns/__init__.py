@@ -12,7 +12,7 @@ __all__ = ('patterns', 'Mismatch')
 class Mismatch(Exception):
     pass
 
-
+import codegen
 def patterns(func):
     empty_argspec = inspect.ArgSpec(args=[], varargs=None, keywords=None, defaults=None)
     assert inspect.getargspec(func) == empty_argspec, 'Pattern function should not have arguments'
@@ -21,7 +21,9 @@ def patterns(func):
     func.__globals__['Mismatch'] = Mismatch
 
     tree = get_ast(func)
+    print("Initial Tree:\n"+codegen.to_source(tree)+"\n")
     transform_function(tree.body[0])
+    print("Final Tree:\n"+codegen.to_source(tree)+"\n")
     return compile_func(func, tree)
 
 
