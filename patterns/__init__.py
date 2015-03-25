@@ -21,9 +21,9 @@ def patterns(func):
     func.__globals__['Mismatch'] = Mismatch
 
     tree = get_ast(func)
-    print("Initial Tree:\n"+codegen.to_source(tree)+"\n")
+    print("\n"+codegen.to_source(tree)+"\n")
     transform_function(tree.body[0])
-    print("Final Tree:\n"+codegen.to_source(tree)+"\n")
+    print("\n"+codegen.to_source(tree)+"\n")
     return compile_func(func, tree)
 
 
